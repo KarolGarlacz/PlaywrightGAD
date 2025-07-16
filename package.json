@@ -3,15 +3,24 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "lint": "npx eslint . --max-warnings 0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@eslint/js": "^9.31.0",
     "@playwright/test": "^1.54.1",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^24.0.13",
-    "prettier": "3.6.2"
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-playwright": "^2.2.0",
+    "eslint-plugin-prettier": "^5.5.1",
+    "globals": "^16.3.0",
+    "prettier": "3.6.2",
+    "typescript-eslint": "^8.36.0"
   }
 }
