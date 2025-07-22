@@ -1,7 +1,7 @@
 import { Page } from '@playwright/test';
 
 export class BasePage {
-  constructor(private page: Page) {}
+  constructor(protected page: Page) {}
   url = '/';
 
   async goto(): Promise<void> {
