@@ -32,5 +32,5 @@ test('comments page title', async ({ page }) => {
 
   //AssertS
   const title = await commentsPage.title();
-  expect(title).toContain('Comments');
+  expect(title).toContain('🦎 GAD | Comments');
 });
