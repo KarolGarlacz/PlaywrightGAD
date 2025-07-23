@@ -7,7 +7,7 @@ test('login user with correct credentials', async ({ page }) => {
   //Arrange
   const loginPage = new LoginPage(page);
   const userName = testUser1.userEmail;
-  const password = 'test1';
+  const password = testUser1.userPassword;
   await loginPage.goto();
 
   //Act
