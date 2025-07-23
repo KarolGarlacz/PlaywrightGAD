@@ -18,3 +18,20 @@ test('login user with correct credentials', async ({ page }) => {
   //Assert
   expect(title).toContain('Welcome');
 });
+
+test('reject login user with incorrect password', async ({ page }) => {
+  //Arrange
+  const loginPage = new LoginPage(page);
+  const userName = testUser1.userEmail;
+  const password = 'incorrect password';
+  await loginPage.goto();
+
+  //Act
+  await loginPage.login(userName, password);
+  const welcomePage = new WelcomePage(page);
+  const title = await welcomePage.title();
+
+  //Assert
+  await expect(loginPage.loginError).toHaveText('Invalid username or password');
+  expect(title).toContain('Login');
+});
