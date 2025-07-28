@@ -3,7 +3,7 @@ import { BasePage } from './base.page';
 import { Page } from '@playwright/test';
 
 export class RegisterPage extends BasePage {
-  url = '/register';
+  url = '/register.html';
   userNameInput = this.page.getByTestId('firstname-input');
   userSurnameInput = this.page.getByTestId('lastname-input');
   userPasswordInput = this.page.getByTestId('password-input');
@@ -11,6 +11,7 @@ export class RegisterPage extends BasePage {
   userEmailInput = this.page.getByTestId('email-input');
   alertPopUp = this.page.getByTestId('alert-popup');
   registerError = this.page.getByTestId('login-error');
+  emailErrorText = this.page.locator('#octavalidate_email');
 
   constructor(page: Page) {
     super(page);
@@ -19,7 +20,7 @@ export class RegisterPage extends BasePage {
     await this.userNameInput.fill(registerUserData.userFirstName);
     await this.userSurnameInput.fill(registerUserData.userLastName);
     await this.userEmailInput.fill(registerUserData.userEmail);
-    await this.userEmailInput.fill(registerUserData.userPassword);
+    await this.userPasswordInput.fill(registerUserData.userPassword);
     await this.registerButton.click();
   }
 }

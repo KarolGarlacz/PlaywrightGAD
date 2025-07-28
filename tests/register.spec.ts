@@ -5,42 +5,64 @@ import { WelcomePage } from '../src/pages/welcome.page';
 import { faker } from '@faker-js/faker';
 import { expect, test } from '@playwright/test';
 
-test('register user with correct credentials', async ({ page }) => {
-  //Arrange
-  const expectedAlertPopUpText = 'User created';
+test.describe('Verify register', () => {
+  test('register user with correct credentials', async ({ page }) => {
+    //Arrange
+    const expectedAlertPopUpText = 'User created';
 
-  const registerUserData: RegisterUser = {
-    userFirstName: faker.person.firstName().replace(/[^A-Za-z]/g, ''),
-    userLastName: faker.person.lastName().replace(/[^A-Za-z]/g, ''),
-    userEmail: '',
-    userPassword: 'test123',
-  };
+    const registerUserData: RegisterUser = {
+      userFirstName: faker.person.firstName().replace(/[^A-Za-z]/g, ''),
+      userLastName: faker.person.lastName().replace(/[^A-Za-z]/g, ''),
+      userEmail: '',
+      userPassword: 'test123',
+    };
 
-  registerUserData.userEmail = faker.internet.email({
-    firstName: registerUserData.userFirstName,
-    lastName: registerUserData.userLastName,
+    registerUserData.userEmail = faker.internet.email({
+      firstName: registerUserData.userFirstName,
+      lastName: registerUserData.userLastName,
+    });
+
+    const registerPage = new RegisterPage(page);
+    await registerPage.goto();
+
+    //Act
+    await registerPage.register(registerUserData);
+
+    //Assert
+    await expect(registerPage.alertPopUp).toHaveText(expectedAlertPopUpText);
+    const loginPage = new LoginPage(page);
+    const title = loginPage.title();
+    expect(title).toContain('Login');
+
+    //Assert
+    await loginPage.login({
+      userEmail: registerUserData.userEmail,
+      userPassword: registerUserData.userPassword,
+    });
+
+    const welcomePage = new WelcomePage(page);
+    const titleWelcome = await welcomePage.title();
+    expect(titleWelcome).toContain('Welcome');
   });
 
-  const registerPage = new RegisterPage(page);
-  await registerPage.goto();
+  test('not register with incorrect data', async ({ page }) => {
+    //Arrange
+    const expectedErrorText = 'This field is required';
 
-  //Act
-  await registerPage.register(registerUserData);
+    const registerPage = new RegisterPage(page);
+    await registerPage.goto();
+    await registerPage.userNameInput.fill(
+      faker.person.firstName().replace(/[^A-Za-z]/g, ''),
+    );
+    await registerPage.userSurnameInput.fill(
+      faker.person.lastName().replace(/[^A-Za-z]/g, ''),
+    );
+    await registerPage.userPasswordInput.fill(faker.internet.password());
 
-  //Assert
-  await expect(registerPage.alertPopUp).toHaveText(expectedAlertPopUpText);
-  const loginPage = new LoginPage(page);
-  await loginPage.waitForPageToLoadURL();
-  const title = loginPage.title();
-  expect(title).toContain('Login');
+    //Act
+    await registerPage.registerButton.click();
 
-  //Assert
-  await loginPage.login({
-    userEmail: registerUserData.userEmail,
-    userPassword: registerUserData.userPassword,
+    //Assert
+    await expect(registerPage.emailErrorText).toHaveText(expectedErrorText);
   });
-
-  const welcomePage = new WelcomePage(page);
-  const titleWelcome = await welcomePage.title();
-  expect(titleWelcome).toContain('Welcome');
 });

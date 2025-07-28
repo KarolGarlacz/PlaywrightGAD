@@ -12,6 +12,7 @@ test.describe('Verify menu main button', () => {
     //Act
     await articlePage.goto();
     await commentPage.mainMenu.commentsButton.click();
+    await commentPage.waitForPageToLoadURL();
     const title = await commentPage.title();
 
     //Assert
@@ -26,6 +27,7 @@ test.describe('Verify menu main button', () => {
     //Act
     await commentPage.goto();
     await articlePage.mainMenu.articleButton.click();
+    await articlePage.waitForPageToLoadURL();
     const title = await articlePage.title();
 
     //Assert

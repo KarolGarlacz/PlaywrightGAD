@@ -16,6 +16,7 @@ test('login user with correct credentials', async ({ page }) => {
   const title = await welcomePage.title();
 
   //Assert
+  await welcomePage.waitForPageToLoadURL();
   expect(title).toContain('Welcome');
 });
 
