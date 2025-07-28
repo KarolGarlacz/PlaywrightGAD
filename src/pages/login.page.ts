@@ -15,13 +15,8 @@ export class LoginPage extends BasePage {
   constructor(page: Page) {
     super(page);
   }
-  async login(email: string, password: string): Promise<void> {
-    await this.userEmailInput.fill(email);
-    await this.userEmailInput.fill(password);
-    await this.loginButton.click();
-  }
 
-  async loginNew(loginUserData: LoginUser): Promise<void> {
+  async login(loginUserData: LoginUser): Promise<void> {
     await this.userEmailInput.fill(loginUserData.userEmail);
     await this.userEmailInput.fill(loginUserData.userPassword);
     await this.loginButton.click();
