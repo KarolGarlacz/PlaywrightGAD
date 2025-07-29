@@ -30,4 +30,27 @@ test.describe('Verify articles', () => {
     await expect.soft(articlePage.articleTitle).toHaveText(articleData.title);
     await expect.soft(articlePage.articleBody).toHaveText(articleData.body);
   });
+
+  test('reject creating article without title', async ({ page }) => {
+    //Arrange
+    const loginPage = new LoginPage(page);
+    const articlesPage = new ArticlesPage(page);
+    const addArticleView = new AddArticleView(page);
+
+    const articleData = randomNewArticle();
+    articleData.title = '';
+
+    const expectedErrorText = 'Article was not created';
+
+    await loginPage.goto();
+    await loginPage.login(testUser1);
+    await articlesPage.goto();
+
+    //Act
+    await articlesPage.addArticleButtonLogged.click();
+    await addArticleView.crateArticle(articleData);
+
+    //Assert
+    await expect(addArticleView.alertPopUp).toHaveText(expectedErrorText);
+  });
 });
