@@ -1,8 +1,7 @@
-import { RegisterUser } from '../src/models/user.model';
+import { randomUserData } from '../src/factories/user.factory';
 import { LoginPage } from '../src/pages/login.page';
 import { RegisterPage } from '../src/pages/register.page';
 import { WelcomePage } from '../src/pages/welcome.page';
-import { faker } from '@faker-js/faker';
 import { expect, test } from '@playwright/test';
 
 test.describe('Verify register', () => {
@@ -10,17 +9,7 @@ test.describe('Verify register', () => {
     //Arrange
     const expectedAlertPopUpText = 'User created';
 
-    const registerUserData: RegisterUser = {
-      userFirstName: faker.person.firstName().replace(/[^A-Za-z]/g, ''),
-      userLastName: faker.person.lastName().replace(/[^A-Za-z]/g, ''),
-      userEmail: '',
-      userPassword: 'test123',
-    };
-
-    registerUserData.userEmail = faker.internet.email({
-      firstName: registerUserData.userFirstName,
-      lastName: registerUserData.userLastName,
-    });
+    const registerUserData = randomUserData();
 
     const registerPage = new RegisterPage(page);
     await registerPage.goto();
@@ -45,21 +34,19 @@ test.describe('Verify register', () => {
     expect(titleWelcome).toContain('Welcome');
   });
 
-  test('not register with incorrect data', async ({ page }) => {
+  test('not register with incorrect data - email not provided', async ({
+    page,
+  }) => {
     //Arrange
     const expectedErrorText = 'This field is required';
-
+    const registerUserData = randomUserData();
     const registerPage = new RegisterPage(page);
-    await registerPage.goto();
-    await registerPage.userNameInput.fill(
-      faker.person.firstName().replace(/[^A-Za-z]/g, ''),
-    );
-    await registerPage.userSurnameInput.fill(
-      faker.person.lastName().replace(/[^A-Za-z]/g, ''),
-    );
-    await registerPage.userPasswordInput.fill(faker.internet.password());
 
     //Act
+    await registerPage.goto();
+    await registerPage.userNameInput.fill(registerUserData.userFirstName);
+    await registerPage.userSurnameInput.fill(registerUserData.userLastName);
+    await registerPage.userPasswordInput.fill(registerUserData.userPassword);
     await registerPage.registerButton.click();
 
     //Assert
