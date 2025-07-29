@@ -1,4 +1,4 @@
-import { ArticlePage } from '../../src/pages/articles.page';
+import { ArticlesPage } from '../../src/pages/articles.page';
 import { CommentsPage } from '../../src/pages/coments.page';
 import { HomePage } from '../../src/pages/home.page';
 import test, { expect } from '@playwright/test';
@@ -6,7 +6,7 @@ import test, { expect } from '@playwright/test';
 test.describe('Verify menu main button', () => {
   test('comments button navigates to comments page', async ({ page }) => {
     //Arrange
-    const articlePage = new ArticlePage(page);
+    const articlePage = new ArticlesPage(page);
     const commentPage = new CommentsPage(page);
 
     //Act
@@ -21,7 +21,7 @@ test.describe('Verify menu main button', () => {
 
   test('articles button navigates to articles page', async ({ page }) => {
     //Arrange
-    const articlePage = new ArticlePage(page);
+    const articlePage = new ArticlesPage(page);
     const commentPage = new CommentsPage(page);
 
     //Act
@@ -36,7 +36,7 @@ test.describe('Verify menu main button', () => {
 
   test('home button navigates to main page', async ({ page }) => {
     //Arrange
-    const articlePage = new ArticlePage(page);
+    const articlePage = new ArticlesPage(page);
     const homePage = new HomePage(page);
 
     //Act
