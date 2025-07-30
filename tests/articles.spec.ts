@@ -47,4 +47,16 @@ test.describe('Verify articles', () => {
     //Assert
     await expect(addArticleView.alertPopUp).toHaveText(expectedErrorText);
   });
+  test('reject creating article without title exceeding 128 sings', async ({}) => {
+    //Arrange
+    const expectedErrorText = 'Article was not created';
+    articleData.title = '';
+    articleData = randomNewArticle(129);
+
+    //Act
+    await addArticleView.crateArticle(articleData);
+
+    //Assert
+    await expect(addArticleView.alertPopUp).toHaveText(expectedErrorText);
+  });
 });
