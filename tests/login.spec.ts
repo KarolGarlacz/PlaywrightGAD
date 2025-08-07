@@ -1,4 +1,4 @@
-import { LoginUser } from '../src/models/user.model';
+import { LoginUserModel } from '../src/models/user.model';
 import { LoginPage } from '../src/pages/login.page';
 import { WelcomePage } from '../src/pages/welcome.page';
 import { testUser1 } from '../src/test-data/user.data';
@@ -22,7 +22,7 @@ test('login user with correct credentials', async ({ page }) => {
 
 test('reject login user with incorrect password', async ({ page }) => {
   //Arrange
-  const loginUserData: LoginUser = {
+  const loginUserData: LoginUserModel = {
     userEmail: testUser1.userEmail,
     userPassword: 'incorrect password',
   };
