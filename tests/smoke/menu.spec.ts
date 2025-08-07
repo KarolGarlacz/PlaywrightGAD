@@ -8,43 +8,46 @@ test.describe('Verify menu main button', () => {
     //Arrange
     const articlePage = new ArticlesPage(page);
     const commentPage = new CommentsPage(page);
+    const expectedCommentTitle = 'Comments';
 
     //Act
     await articlePage.goto();
     await commentPage.mainMenu.commentsButton.click();
     await commentPage.waitForPageToLoadURL();
-    const title = await commentPage.title();
+    const title = await commentPage.getTitle();
 
     //Assert
-    expect(title).toContain('Comments');
+    expect(title).toContain(expectedCommentTitle);
   });
 
   test('articles button navigates to articles page', async ({ page }) => {
     //Arrange
     const articlePage = new ArticlesPage(page);
     const commentPage = new CommentsPage(page);
+    const expectedArticleTitle = 'Articles';
 
     //Act
     await commentPage.goto();
     await articlePage.mainMenu.articleButton.click();
     await articlePage.waitForPageToLoadURL();
-    const title = await articlePage.title();
+    const title = await articlePage.getTitle();
 
     //Assert
-    expect(title).toContain('Articles');
+    expect(title).toContain(expectedArticleTitle);
   });
 
   test('home button navigates to main page', async ({ page }) => {
     //Arrange
     const articlePage = new ArticlesPage(page);
     const homePage = new HomePage(page);
+    const expectedHomePageTitle = 'GAD';
 
     //Act
     await articlePage.goto();
     await articlePage.mainMenu.homeButton.click();
-    const title = await homePage.title();
+    const title = await homePage.getTitle();
 
     //Assert
-    expect(title).toContain('GAD');
+    expect(title).toContain(expectedHomePageTitle);
   });
 });

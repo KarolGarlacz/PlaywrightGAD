@@ -1,4 +1,4 @@
-import { randomNewArticle } from '../src/factories/article.factory';
+import { prepareRandomArticle } from '../src/factories/article.factory';
 import { AddArticleModel } from '../src/models/article.model';
 import { ArticlesPage } from '../src/pages/articles.page';
 import { LoginPage } from '../src/pages/login.page';
@@ -20,7 +20,7 @@ test.describe('Verify articles', () => {
     await loginPage.login(testUser1);
     await articlesPage.goto();
     await articlesPage.addArticleButtonLogged.click();
-    articleData = randomNewArticle();
+    articleData = prepareRandomArticle();
   });
 
   test('reject creating article without title', async ({}) => {
@@ -39,7 +39,7 @@ test.describe('Verify articles', () => {
     //Arrange
     const expectedErrorText = 'Article was not created';
     articleData.title = '';
-    articleData = randomNewArticle(129);
+    articleData = prepareRandomArticle(129);
 
     //Act
     await addArticleView.crateArticle(articleData);

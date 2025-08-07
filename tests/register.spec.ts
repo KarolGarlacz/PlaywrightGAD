@@ -1,4 +1,4 @@
-import { randomUserData } from '../src/factories/user.factory';
+import { prepareRandomUser } from '../src/factories/user.factory';
 import { RegisterUserModel } from '../src/models/user.model';
 import { LoginPage } from '../src/pages/login.page';
 import { RegisterPage } from '../src/pages/register.page';
@@ -11,11 +11,13 @@ test.describe('Verify register', () => {
 
   test.beforeEach(async ({ page }) => {
     registerPage = new RegisterPage(page);
-    registerUserData = randomUserData();
+    registerUserData = prepareRandomUser();
   });
   test('register user with correct credentials', async ({ page }) => {
     //Arrange
     const expectedAlertPopUpText = 'User created';
+    const expectedLoginTitle = 'Login';
+    const expectedWelcomeTitle = 'Welcome';
 
     const loginPage = new LoginPage(page);
     const welcomePage = new WelcomePage(page);
@@ -26,8 +28,8 @@ test.describe('Verify register', () => {
 
     //Assert
     await expect(registerPage.alertPopUp).toHaveText(expectedAlertPopUpText);
-    const title = loginPage.title();
-    expect(title).toContain('Login');
+    const title = loginPage.getTitle();
+    expect(title).toContain(expectedLoginTitle);
 
     //Assert
     await loginPage.login({
@@ -35,8 +37,8 @@ test.describe('Verify register', () => {
       userPassword: registerUserData.userPassword,
     });
 
-    const titleWelcome = await welcomePage.title();
-    expect(titleWelcome).toContain('Welcome');
+    const titleWelcome = await welcomePage.getTitle();
+    expect(titleWelcome).toContain(expectedWelcomeTitle);
   });
 
   test('not register with incorrect data - email not provided', async ({}) => {

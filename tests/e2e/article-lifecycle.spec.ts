@@ -1,4 +1,4 @@
-import { randomNewArticle } from '../../src/factories/article.factory';
+import { prepareRandomArticle } from '../../src/factories/article.factory';
 import { AddArticleModel } from '../../src/models/article.model';
 import { ArticlePage } from '../../src/pages/article.page';
 import { ArticlesPage } from '../../src/pages/articles.page';
@@ -29,11 +29,11 @@ test.describe('Create, verify and delete article', () => {
   test('create new articles', async ({}) => {
     //Arrange
 
-    articleData = randomNewArticle();
+    articleData = prepareRandomArticle();
 
     //Act
     await articlesPage.addArticleButtonLogged.click();
-    await expect.soft(addArticleView.header).toBeVisible();
+    await expect.soft(addArticleView.addNewHeader).toBeVisible();
     await addArticleView.crateArticle(articleData);
 
     //Assert
@@ -50,6 +50,8 @@ test.describe('Create, verify and delete article', () => {
   });
   test('user can delete his own article', async ({}) => {
     //Arrange
+    const expectedNoResultsText = 'No data';
+    const expectedArticleTitle = 'Articles';
     await articlesPage.gotoArticle(articleData.title);
 
     //Act
@@ -57,10 +59,10 @@ test.describe('Create, verify and delete article', () => {
 
     //Assert
     await articlesPage.waitForPageToLoadURL();
-    const title = await articlesPage.title();
-    expect(title).toContain('Articles');
+    const title = await articlesPage.getTitle();
+    expect(title).toContain(expectedArticleTitle);
 
     await articlesPage.searchArticle(articleData.title);
-    await expect(articlesPage.noResults).toHaveText('No data');
+    await expect(articlesPage.noResults).toHaveText(expectedNoResultsText);
   });
 });
