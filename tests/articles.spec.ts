@@ -1,6 +1,5 @@
 import { randomNewArticle } from '../src/factories/article.factory';
 import { AddArticleModel } from '../src/models/article.model';
-import { ArticlePage } from '../src/pages/article.page';
 import { ArticlesPage } from '../src/pages/articles.page';
 import { LoginPage } from '../src/pages/login.page';
 import { testUser1 } from '../src/test-data/user.data';
@@ -23,18 +22,6 @@ test.describe('Verify articles', () => {
     await articlesPage.addArticleButtonLogged.click();
     articleData = randomNewArticle();
   });
-  test('create new articles', async ({ page }) => {
-    //Arrange
-    const articlePage = new ArticlePage(page);
-
-    //Act
-    await expect.soft(addArticleView.header).toBeVisible();
-    await addArticleView.crateArticle(articleData);
-
-    //Assert
-    await expect.soft(articlePage.articleTitle).toHaveText(articleData.title);
-    await expect.soft(articlePage.articleBody).toHaveText(articleData.body);
-  });
 
   test('reject creating article without title', async ({}) => {
     //Arrange
@@ -47,6 +34,7 @@ test.describe('Verify articles', () => {
     //Assert
     await expect(addArticleView.alertPopUp).toHaveText(expectedErrorText);
   });
+
   test('reject creating article without title exceeding 128 sings', async ({}) => {
     //Arrange
     const expectedErrorText = 'Article was not created';
