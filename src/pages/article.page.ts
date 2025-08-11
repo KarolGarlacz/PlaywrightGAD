@@ -1,6 +1,11 @@
 import { MainMenuComponents } from '../components/main-menu.components';
 import { HomePage } from './home.page';
-import { Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
+
+interface ArticleComment {
+  body: Locator;
+  link: Locator;
+}
 
 export class ArticlePage extends HomePage {
   url = '/article.html';
@@ -19,5 +24,16 @@ export class ArticlePage extends HomePage {
       await dialog.accept();
     });
     this.deleteButton.click();
+  }
+
+  async getArticleComment(body: string): Promise<ArticleComment> {
+    const commentContainer = this.page
+      .locator('.comment-container')
+      .filter({ hasText: body });
+
+    return {
+      body: commentContainer.locator(':text("Comment:") + span'),
+      link: commentContainer.locator("[id^='gotoComment']"),
+    };
   }
 }
