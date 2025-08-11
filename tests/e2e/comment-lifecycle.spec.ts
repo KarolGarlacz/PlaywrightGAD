@@ -1,4 +1,5 @@
 import { prepareRandomArticle } from '../../src/factories/article.factory';
+import { prepareRandomComment } from '../../src/factories/comment.factory';
 import { AddArticleModel } from '../../src/models/article.model';
 import { ArticlePage } from '../../src/pages/article.page';
 import { ArticlesPage } from '../../src/pages/articles.page';
@@ -39,10 +40,12 @@ test.describe('Create, verify and delete comment', () => {
     //Arrange
     const expectedCommentHeader = 'Add New Comment';
     const expectedCommentCreatedPopup = 'Comment was created';
-    const commentText = 'hello';
+
+    const newCommentData = prepareRandomComment();
+
     await articlePage.addCommentButton.click();
     await expect(addCommentView.addNewHeader).toHaveText(expectedCommentHeader);
-    await addCommentView.bodyInput.fill(commentText);
+    await addCommentView.bodyInput.fill(newCommentData.body);
     await addCommentView.saveButton.click();
     //Act
     //Assert
@@ -50,11 +53,11 @@ test.describe('Create, verify and delete comment', () => {
       expectedCommentCreatedPopup,
     );
     //Verify comment
-    const articleComment = articlePage.getArticleComment(commentText);
+    const articleComment = articlePage.getArticleComment(newCommentData.body);
 
-    await expect((await articleComment).body).toHaveText(commentText);
+    await expect((await articleComment).body).toHaveText(newCommentData.body);
     (await articleComment).link.click();
     //Assert
-    await expect(commentPage.commentBody).toHaveText(commentText);
+    await expect(commentPage.commentBody).toHaveText(newCommentData.body);
   });
 });
