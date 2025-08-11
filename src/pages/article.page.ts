@@ -8,6 +8,8 @@ export class ArticlePage extends HomePage {
   articleTitle = this.page.getByTestId('article-title');
   articleBody = this.page.getByTestId('article-body');
   deleteButton = this.page.getByTestId('delete');
+  addCommentButton = this.page.locator('#add-new-comment');
+  alertPopUp = this.page.getByTestId('alert-popup');
 
   constructor(page: Page) {
     super(page);
