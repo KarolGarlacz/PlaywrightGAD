@@ -85,7 +85,7 @@ test.describe('Create, verify and delete comment', () => {
         .toHaveText(expectedCommentEditPopup);
     });
 
-    await test.step('update comment', async ({}) => {
+    await test.step('verify updated comment in article page', async ({}) => {
       //Act
       await commentPage.returnLink.click();
 
@@ -96,6 +96,22 @@ test.describe('Create, verify and delete comment', () => {
       await expect((await updatedArticleComment).body).toHaveText(
         editCommentData.body,
       );
+    });
+    await test.step('create and verify second comment', async ({}) => {
+      //Act
+      const secondCommentData = prepareRandomComment();
+      //Act
+      await articlePage.addCommentButton.click();
+      await addCommentView.createdComment(secondCommentData);
+      //Assert
+      const articleComment = articlePage.getArticleComment(
+        secondCommentData.body,
+      );
+      await expect((await articleComment).body).toHaveText(
+        secondCommentData.body,
+      );
+      (await articleComment).link.click();
+      await expect(commentPage.commentBody).toHaveText(secondCommentData.body);
     });
   });
 });
