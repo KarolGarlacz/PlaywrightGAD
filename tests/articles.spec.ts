@@ -23,7 +23,7 @@ test.describe('Verify articles', () => {
     articleData = prepareRandomArticle();
   });
 
-  test('reject creating article without title', async ({}) => {
+  test('reject creating article without title @logged', async ({}) => {
     //Arrange
     const expectedErrorText = 'Article was not created';
     articleData.title = '';
