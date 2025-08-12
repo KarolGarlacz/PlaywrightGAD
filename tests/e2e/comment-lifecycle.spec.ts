@@ -46,7 +46,7 @@ test.describe('Create, verify and delete comment', () => {
 
     const newCommentData = prepareRandomComment();
 
-    await test.step('create new comment', async ({}) => {
+    await test.step('create first comment', async ({}) => {
       const expectedCommentHeader = 'Add New Comment';
       //Act
       await articlePage.addCommentButton.click();
@@ -95,6 +95,21 @@ test.describe('Create, verify and delete comment', () => {
       //Assert
       await expect((await updatedArticleComment).body).toHaveText(
         editCommentData.body,
+      );
+    });
+  });
+
+  test('user can add more than one comment', async ({}) => {
+    await test.step('create comment', async ({}) => {
+      //Act
+      const expectedCommentCreatedPopup = 'Comment was created';
+      const newCommentData = prepareRandomComment();
+      await articlePage.addCommentButton.click();
+
+      await addCommentView.createdComment(newCommentData);
+      //Assert
+      await expect(articlePage.alertPopUp).toHaveText(
+        expectedCommentCreatedPopup,
       );
     });
     await test.step('create and verify second comment', async ({}) => {
