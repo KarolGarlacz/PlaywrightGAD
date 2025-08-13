@@ -1,5 +1,5 @@
 import { ArticlesPage } from '@_src/pages/articles.page';
-import { CommentsPage } from '@_src/pages/coments.page';
+import { CommentsPage } from '@_src/pages/comments.page';
 import { HomePage } from '@_src/pages/home.page';
 import test, { expect } from '@playwright/test';
 
