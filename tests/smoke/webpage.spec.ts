@@ -1,6 +1,6 @@
-import { ArticlesPage } from '../../src/pages/articles.page';
-import { CommentsPage } from '../../src/pages/coments.page';
-import { HomePage } from '../../src/pages/home.page';
+import { ArticlesPage } from '@_src/pages/articles.page';
+import { CommentsPage } from '@_src/pages/coments.page';
+import { HomePage } from '@_src/pages/home.page';
 import { expect, test } from '@playwright/test';
 
 test('home page title @smoke', async ({ page }) => {
