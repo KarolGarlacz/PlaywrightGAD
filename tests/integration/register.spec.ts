@@ -28,6 +28,7 @@ test.describe('Verify register', () => {
 
     //Assert
     await expect(registerPage.alertPopUp).toHaveText(expectedAlertPopUpText);
+    await loginPage.waitForPageToLoadURL();
     const title = loginPage.getTitle();
     expect(title).toContain(expectedLoginTitle);
 
