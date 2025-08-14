@@ -1,5 +1,5 @@
-import { MainMenuComponents } from '../components/main-menu.components';
 import { HomePage } from './home.page';
+import { MainMenuComponents } from '@_src/components/main-menu.components';
 import { Locator, Page } from '@playwright/test';
 
 interface ArticleComment {
