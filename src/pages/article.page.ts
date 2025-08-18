@@ -1,4 +1,6 @@
 import { MainMenuComponents } from '@_src/components/main-menu.components';
+import { ArticlesPage } from '@_src/pages/articles.page';
+import { CommentsPage } from '@_src/pages/comments.page';
 import { HomePage } from '@_src/pages/home.page';
 import { Locator, Page } from '@playwright/test';
 
@@ -19,11 +21,12 @@ export class ArticlePage extends HomePage {
   constructor(page: Page) {
     super(page);
   }
-  async deleteArticle(): Promise<void> {
+  async deleteArticle(): Promise<ArticlesPage> {
     this.page.on('dialog', async (dialog) => {
       await dialog.accept();
     });
     this.deleteButton.click();
+    return new ArticlesPage(this.page);
   }
 
   async getArticleComment(body: string): Promise<ArticleComment> {
@@ -35,5 +38,9 @@ export class ArticlePage extends HomePage {
       body: commentContainer.locator(':text("Comment:") + span'),
       link: commentContainer.locator("[id^='gotoComment']"),
     };
+  }
+  async clickCommentLink(commentLink: Locator): Promise<CommentsPage> {
+    await commentLink.click();
+    return new CommentsPage(this.page);
   }
 }
