@@ -12,8 +12,7 @@ test('login user with correct credentials', async ({ page }) => {
   await loginPage.goto();
 
   //Act
-  await loginPage.login(testUser1);
-  const welcomePage = new WelcomePage(page);
+  const welcomePage = await loginPage.login(testUser1);
   const title = await welcomePage.getTitle();
 
   //Assert
