@@ -1,25 +1,13 @@
-import { ArticlesPage } from '@_src/pages/articles.page';
-import { CommentsPage } from '@_src/pages/comments.page';
-import { test as baseTest, expect } from '@playwright/test';
-
-const test = baseTest.extend<{ articlePage: ArticlesPage }>({
-  articlePage: async ({ page }, use) => {
-    const articlePage = new ArticlesPage(page);
-    await articlePage.goto();
-    await use(articlePage);
-  },
-});
+import { expect, test } from '@_src/fixtures/merge.fixture';
 
 test.describe('Verify menu main button', () => {
   test('comments button navigates to comments page', async ({
     articlePage,
   }) => {
     //Arrange
-    //const articlePage = new ArticlesPage(page);
     const expectedCommentTitle = 'Comments';
 
     //Act
-
     const commentPage = await articlePage.mainMenu.clickCommentButton();
     const title = await commentPage.getTitle();
 
@@ -27,13 +15,13 @@ test.describe('Verify menu main button', () => {
     expect(title).toContain(expectedCommentTitle);
   });
 
-  test('articles button navigates to articles page', async ({ page }) => {
+  test('articles button navigates to articles page', async ({
+    commentPage,
+  }) => {
     //Arrange
-    const commentPage = new CommentsPage(page);
     const expectedArticleTitle = 'Articles';
 
     //Act
-    await commentPage.goto();
     const articlePage = await commentPage.mainMenu.clickArticlesButton();
     const title = await articlePage.getTitle();
 
@@ -41,13 +29,11 @@ test.describe('Verify menu main button', () => {
     expect(title).toContain(expectedArticleTitle);
   });
 
-  test('home button navigates to main page', async ({ page }) => {
+  test('home button navigates to main page', async ({ articlePage }) => {
     //Arrange
-    const articlePage = new ArticlesPage(page);
     const expectedHomePageTitle = 'GAD';
 
     //Act
-    await articlePage.goto();
     const homePage = await articlePage.mainMenu.clickHomePageLink();
     const title = await homePage.getTitle();
 
