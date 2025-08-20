@@ -1,3 +1,4 @@
+import { RESPONSE_TIMEOUT } from '@_pw-config';
 import { prepareRandomArticle } from '@_src/factories/article.factory';
 import { AddArticleModel } from '@_src/models/article.model';
 import { ArticlesPage } from '@_src/pages/articles.page';
@@ -18,16 +19,22 @@ test.describe('Verify articles', () => {
     articleData = prepareRandomArticle();
   });
 
-  test('reject creating article without title @logged', async ({}) => {
+  test('reject creating article without title @logged', async ({ page }) => {
     //Arrange
     const expectedErrorText = 'Article was not created';
+    const expectedResponseCode = 422;
     articleData.title = '';
+    const responsePromise = page.waitForResponse('/api/article', {
+      timeout: RESPONSE_TIMEOUT,
+    });
 
     //Act
     await addArticleView.crateArticle(articleData);
+    const response = await responsePromise;
 
     //Assert
     await expect(addArticleView.alertPopUp).toHaveText(expectedErrorText);
+    expect(response.status()).toBe(expectedResponseCode);
   });
 
   test('reject creating article without title exceeding 128 sings @logged', async ({}) => {
