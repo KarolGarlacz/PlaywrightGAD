@@ -1,14 +1,10 @@
 import { STORAGE_STATE } from '../../playwright.config';
-import { LoginPage } from '@_src/pages/login.page';
+import { expect, test as setup } from '@_src/fixtures/merge.fixture';
 import { testUser1 } from '@_src/test-data/user.data';
-import { expect, test as setup } from '@playwright/test';
 
-setup('login and save session', async ({ page }) => {
+setup('login and save session', async ({ loginPage, page }) => {
   //Arrange
   const expectedWelcomeTitle = 'Welcome';
-  const loginPage = new LoginPage(page);
-
-  await loginPage.goto();
   const welcomePage = await loginPage.login(testUser1);
 
   //Act
