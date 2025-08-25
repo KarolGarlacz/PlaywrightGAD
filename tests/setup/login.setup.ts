@@ -1,6 +1,7 @@
 import { STORAGE_STATE } from '../../playwright.config';
-import { expect, test as setup } from '@_src/fixtures/merge.fixture';
+import { test as setup } from '@_src/fixtures/merge.fixture';
 import { testUser1 } from '@_src/test-data/user.data';
+import { expect } from '@playwright/test';
 
 setup('login and save session', async ({ loginPage, page }) => {
   //Arrange

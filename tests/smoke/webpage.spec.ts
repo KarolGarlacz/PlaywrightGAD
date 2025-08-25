@@ -1,4 +1,5 @@
-import { expect, test } from '@_src/fixtures/merge.fixture';
+import { test } from '@_src/fixtures/merge.fixture';
+import { expect } from '@playwright/test';
 
 test('home page title @smoke', async ({ homePage }) => {
   //Arrange

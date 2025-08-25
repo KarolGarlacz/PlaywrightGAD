@@ -25,7 +25,7 @@ test.describe('Verify articles', () => {
     const expectedErrorText = 'Article was not created';
     const expectedResponseCode = 422;
     articleData.title = '';
-    const responsePromise = waitForResponse(page, '/api/articles*');
+    const responsePromise = waitForResponse({ page, url: '/api/articles*' });
 
     //Act
     await addArticleView.crateArticle(articleData);
@@ -45,7 +45,7 @@ test.describe('Verify articles', () => {
     const expectedResponseCode = 422;
     articleData = prepareRandomArticle(129);
 
-    const responsePromise = waitForResponse(page, '/api/articles*');
+    const responsePromise = waitForResponse({ page, url: '/api/articles*' });
     //Act
     await addArticleView.crateArticle(articleData);
     const response = await responsePromise;

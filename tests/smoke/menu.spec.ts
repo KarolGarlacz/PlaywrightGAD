@@ -1,4 +1,5 @@
-import { expect, test } from '@_src/fixtures/merge.fixture';
+import { test } from '@_src/fixtures/merge.fixture';
+import { expect } from '@playwright/test';
 
 test.describe('Verify menu main button', () => {
   test('comments button navigates to comments page', async ({

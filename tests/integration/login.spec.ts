@@ -1,7 +1,8 @@
-import { expect, test } from '@_src/fixtures/merge.fixture';
+import { test } from '@_src/fixtures/merge.fixture';
 import { LoginUserModel } from '@_src/models/user.model';
 import { WelcomePage } from '@_src/pages/welcome.page';
 import { testUser1 } from '@_src/test-data/user.data';
+import { expect } from '@playwright/test';
 
 test('login user with correct credentials', async ({ loginPage }) => {
   //Arrange
